@@ -73,6 +73,7 @@ Page({
           oddId: res.id
         })
       })
+     
   },
   scanCode() {
     this.setData({
@@ -83,10 +84,14 @@ Page({
         this.getCodeDetail(res.code)
       })
   },
+  isScanCode() {
+    this.scanCode();
+  },
   // 获取码详情
   getCodeDetail(uniqueCode) {
     getCodeDetail({ uniqueCode })
       .then(data => {
+        this.scanCode()
         if (!data.boxVo && !data.productVo) {
           Toast(data.log);
           return
@@ -126,6 +131,7 @@ Page({
         this.setData({ pickList });
         setSingleNumberInformation(pickList);
       })
+      
   },
   // 验证码是否有效
   verifyCOde(verifyData) {
@@ -134,13 +140,12 @@ Page({
     let isValid = pickList.some(v => {
       if (v.number === number) {
         let res = this.isDelivery(initializeData, uniqueCode, productCodeList);
-        
+
         if (res) {
           return
         }
 
         if (productVo) {
-
           if (!codeArr && !codeArr.length) {
             codeArr = []
           }
@@ -161,11 +166,11 @@ Page({
             boxArr = []
           }
           productCodeList = productUniqueCodeList
-          let result = this.deepValidate(productCodeList, v.uniqueCode);
-          if (!result){
-Toast('此码已出库')
-return
-          }
+          // let result = this.deepValidate(productCodeList, v.uniqueCode);
+          // if (!result) {
+          //   Toast('此码已出库')
+          //   return
+          // }
           this.setData({ productCodeList })
           if (codeArr.find(item => this.data.productCodeList.indexOf(item.uniqueCode) > -1)) {
             Toast('请勿重复添加,箱码')
@@ -213,7 +218,10 @@ return
   // 判断码是否出库
   isDelivery(initializeData, uniqueCode, productCodeList) {
     let res = initializeData.some(item => {
-      if (item.boxCode.indexOf(uniqueCode) > -1 || item.uniqueCode.indexOf(uniqueCode) > -1) {
+      let index = item.boxCode.indexOf(uniqueCode);
+      let index1 = item.uniqueCode.indexOf(uniqueCode);
+      let index2 = item.codeList.indexOf(uniqueCode)
+      if (index != -1 || index1 != -1 || index2 != -1) {
         Toast("此码已出库！");
         return true
       }
@@ -225,8 +233,7 @@ return
 
 
   //深度检测
-  deepValidate (codeList, validateList) {
-    
+  deepValidate(codeList, validateList) {
     if (!codeList || !codeList.length || !validateList || !validateList.length) {
       return true;
     }
@@ -277,6 +284,7 @@ return
                 this.goIndex();
               }, 500)
             })
+            
         }
       }
     })
@@ -342,12 +350,11 @@ return
     let codeArr = getCodeArrData('_codeArrData');
     // this.filteCode(pickList);
     pickList = this.formatParams(pickList);
-    console.log(pickList)
     // this.delateList(pickList);
     let boxUniqueCodeList = ''
     let productUniqueCodeList = ''
     let list = JSON.stringify(pickList);
-  
+
     if (boxArr && boxArr.length) {
       boxUniqueCodeList = boxArr.map(v => v.uniqueCode);
     }

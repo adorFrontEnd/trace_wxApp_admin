@@ -12,7 +12,6 @@
   width: 85%;
   height: 46px;
   background: #fff;
-  margin-bottom: 10px;
   padding-left: 10px;
   position: ralative;
 }
@@ -44,6 +43,6 @@
   width: 30px;
   height: 30px;
   top: 8px;
-  right: 8px;
+  right: 80px;
   position: absolute
 }

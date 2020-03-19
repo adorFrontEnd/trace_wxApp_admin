@@ -85,7 +85,7 @@ Page({
           "loading.init": false
         })
       })
-      .catch(() => {
+      .catch((data) => {
         this.setData({
           'loading.show': false,
           "loading.init": false,

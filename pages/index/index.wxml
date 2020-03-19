@@ -27,10 +27,9 @@
         <image lazy-load src="/assets/img/index/logout.png" class="icon1" style="width:45px;height:45px"></image>
         <view>注销登录</view>
       </view>
-      
     </view>
   </view>
   <view class='bottom'>成都爱朵智能科技有限公司提供服务 </view>
-  <view class='bottom' style="bottom:0">当前版本：1.0.2</view>
+  <view class='bottom' style="bottom:0">当前版本：{{version}}</view>
 </view>
 

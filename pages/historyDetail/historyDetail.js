@@ -29,12 +29,12 @@ Page({
     .then(data=>{
       let pickingHistoryDetail=data.data;
       pickingHistoryDetail.deliveryTime = dateUtil.getDateTime(pickingHistoryDetail.deliveryTime);
-      console.log(pickingHistoryDetail)
       this.setData({
         pickingHistoryDetail,
         pickingHistoryDetailList: data.data.list
       })
     })
+     
   },
 
 

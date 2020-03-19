@@ -1,8 +1,8 @@
 import { apiUrlPrefix } from '../../config/http.config.js'
 import Toast from '../../utils/toast.js'
-import { getCacheToken } from '../localStorage/login.js'
+import { getCacheToken, userLogout } from '../localStorage/login.js'
 import { getEnctrySign } from '../../utils/sign.js'
-
+import { goLogin} from '../../router/router.js'
 /*@params 
   options:{  
     header:{},       // 请求头 
@@ -122,6 +122,12 @@ let _request = function (url, params, method, options) {
         }
 
         if (toastData.required) {
+          if (res.data.errorCode == "SYS.0003" || res.data.errorCode == "SYS.0002") {
+            Toast(toastData.overTokenErrorTitle, 'error');
+            goLogin()
+            userLogout()
+          }
+
           if (res.data.errorCode == "SYS.0000") {
             Toast(toastData.serverErrTitle)
           } else if (res.data.errorMessage) {
@@ -142,7 +148,7 @@ let _request = function (url, params, method, options) {
           Toast(toastData.errorTitle)
         }
       }
-      
+
     }
 
     if (options.header) {
@@ -164,7 +170,7 @@ const getReqObj = (relativeUrl, params, isPost, tokenless) => {
 
   // 过滤值为null的参数
   params = filterNullKeyInParams(params);
-  
+
   let urlObj = {}
   if (!tokenless) {
     urlObj.token = getCacheToken()

@@ -2,7 +2,7 @@
 <view style='min-height:100vh;background:#f2f2f2'>
   <view style="padding:0 10px;height:4vh;line-height:4vh">{{date}}</view>
   <scroll-view scroll-y lower-threshold="100" style="height: 80vh;" bindscrolltolower="loadMoreList" lower-threshold="120">
-    <block wx:for='{{pickingHistoryList}}' wx:key="{{index}}" >
+    <block wx:for='{{pickingHistoryList}}' wx:key="{{index}}">
       <view>
         <view style="background:#fff;padding:10px;line-height:25px;border-bottom:1px solid #cdcdcd" catchtap="gohistoryDetail" data-id='{{item.id}}'>
           <view>订单号：{{item.orderNo}}</view>
@@ -13,19 +13,19 @@
             <view>{{item.startActTime}}</view>
           </view>
         </view>
-        </view>
+      </view>
     </block>
-     <pageLoad showInit="{{loading.init}}" showNoInfo="{{!pickingHistoryList }}" showLoading="{{loading.show}}" showHasMore="{{!loading.hasMore}}" />
+    <pageLoad showInit="{{loading.init}}" showNoInfo="{{!pickingHistoryList }}" showLoading="{{loading.show}}" showHasMore="{{!loading.hasMore}}"/>
   </scroll-view>
 
-
-
-
-  <view class="choosetime" bindchange="bindDateChange">
+ 
     <picker mode="date" start="2019-08-01" bindchange="bindDateChange">
+     <view class="choosetime">
       <view style='color:#fff;font-size: 16px'>
         选择拣货时间
       </view>
+      </view>
     </picker>
-  </view>
-  </view>
+  
+  
+</view>

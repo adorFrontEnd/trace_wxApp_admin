@@ -45,16 +45,15 @@ Page({
     })
     scanCode()
       .then((res) => {
-        if (!res || !res.result || res.result.length != 12 || res.result.substr(0, 2) !== "JY") {
+        let trackingNumber = res.result.toUpperCase();
+        this.setData({ trackingNumber });
+        if (!res || !res.result || trackingNumber.substr(0, 2) !== "JY") {
           Toast('请扫描正确的单号!');
           return;
         }
-        this.setData({ trackingNumber: res.result });
-        this.getSingleInformation(res.result);
+        this.getSingleInformation(trackingNumber);
       })
-      .catch(data => {
-        Toast('请扫描正确的单号!')
-      })
+    
   },
 
   // 获取拣货数据
@@ -68,20 +67,27 @@ Page({
           this.goAgency(oddNumber)
         }
       })
+      
   },
   // 获取物流单号
   getNumber(e) {
     let trackingNumber = e.detail.value;
     this.setData({ trackingNumber });
-    if (!trackingNumber || trackingNumber.length != 12) {
+  },
+  // 点击查询
+  clickInquire() {
+    let { trackingNumber } = this.data;
+    if (!trackingNumber) {
+      Toast('请输入单号')
       return;
     }
+    trackingNumber = trackingNumber.toUpperCase()
+
     if (trackingNumber.substr(0, 2) !== "JY") {
       Toast('单号不正确，请重新输入！');
       return;
     }
     this.getSingleInformation(trackingNumber)
-
   },
   clearTrackingNumber() {
     this.setData({ trackingNumber: null });

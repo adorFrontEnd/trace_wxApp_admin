@@ -3,7 +3,7 @@ import router from '../../router/router.js';
 import { userLogout, isUserLogin } from '../../api/localStorage/login.js';
 import { getCacheUserInfo } from '../../api/localStorage/login.js';
 import Toast from "../../utils/toast.js";
-
+import AppConfig from '../../config/app.config.js';
 
 
 Page({
@@ -15,7 +15,8 @@ Page({
     userInfo: null,
     shipStatus: null,
     storeStatus: null,
-    isFous: true
+    isFous: true,
+    version: AppConfig.version
   },
 onLoad(){
   let userInfo = getCacheUserInfo();

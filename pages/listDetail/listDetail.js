@@ -49,13 +49,26 @@ Page({
 
   // 获取拣货详情
   getDetail(number) {
-
     pickingDetail({ number })
       .then(data => {
-        this.setData({ goodsDetailArr: data })
+        let res = this.formatList(data)
+        this.setData({ goodsDetailArr: res })
       })
+      
   },
+  // 格式化详情
+  formatList(pickList) {
+    if (!pickList || !pickList.length) {
+      return pickList;
+    }
+    pickList.forEach((item => {
+      if (item.type == 2) {
+        item.specification = JSON.parse(item.specification)
+      }
+    }))
 
+    return pickList;
+  },
   // 点击删除
   clickDelete(e) {
     let uniqueCode = e.target.dataset.id;
